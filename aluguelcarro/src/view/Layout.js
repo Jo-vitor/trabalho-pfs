@@ -9,7 +9,7 @@ const Layout = () => {
         <React.Fragment>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                    <a class="navbar-brand" style={{ width: "2%" }}><img style={{ width: "150%", height: "10%" }} src="https://www.zarla.com/images/zarla-allauto-1x1-2400x2400-20211213-cbvb36gj97y79khvm93r.png?crop=1:1,smart&width=250&dpr=2" /></a>
+                    <a class="navbar-brand" style={{ width: "2%" }} href="/"><img style={{ width: "150%", height: "10%" }} src="https://www.zarla.com/images/zarla-allauto-1x1-2400x2400-20211213-cbvb36gj97y79khvm93r.png?crop=1:1,smart&width=250&dpr=2" alt="logo"/></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
