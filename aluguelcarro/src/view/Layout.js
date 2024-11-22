@@ -29,7 +29,7 @@ const Layout = () => {
                         </ul>
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
-                                <Link className="nav-link" to="logout">
+                                <Link className="nav-link" to="/">
                                     Logout
                                 </Link>
                             </li>

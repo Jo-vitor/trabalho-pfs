@@ -8,23 +8,23 @@ const InserirCarro = () => {
 
 
     const [objeto, setObjeto] = useState(
-        {modelo: "", preco: 0}
+        { modelo: "", preco: 0 }
     )
 
     const salvar = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5146/carros', objeto).then( resp => {
-            navigate('/home');
+        axios.post('http://localhost:5146/carros', objeto).then(resp => {
+            navigate('/adm/home');
         });
     }
 
     const voltar = (e) => {
         e.preventDefault();
-        navigate('/home');
+        navigate('/adm/home');
     }
 
     const atualizarCampo = (nome, valor) => {
-        let objNovo = {...objeto};
+        let objNovo = { ...objeto };
         objNovo[nome] = valor;
         setObjeto(objNovo);
     }
@@ -47,25 +47,27 @@ const InserirCarro = () => {
                     <input
                         type="number"
                         className="form-control"
-                        min= "1"
+                        min="1"
                         value={objeto.preco}
                         onChange={e => atualizarCampo('preco', e.target.value)}
                     />
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-success"
-                    onClick={e => salvar(e)}
-                >
-                    Inserir
-                </button>
-                <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={e => voltar(e)}
-                >
-                    Voltar
-                </button>
+                <div className="card-footer d-flex justify-content-start gap-2">
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        onClick={e => salvar(e)}
+                    >
+                        Inserir
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={e => voltar(e)}
+                    >
+                        Voltar
+                    </button>
+                </div>
             </div>
         </form>
     );

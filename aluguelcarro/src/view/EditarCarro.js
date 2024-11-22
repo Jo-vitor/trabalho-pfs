@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditarCarro = () => {
   const [objeto, setObjeto] = useState(
-    {id: "", modelo: "", preco: 0}
+    { id: "", modelo: "", preco: 0 }
   )
+
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
   useEffect(() => {
     axios.get(`http://localhost:5146/carros/${id}`).then(resp => {
+      console.log(resp.data);
       setObjeto(resp.data);
     })
   }, [id]);
@@ -24,6 +27,13 @@ const EditarCarro = () => {
   const salvar = (e) => {
     e.preventDefault();
     axios.put(`http://localhost:5146/carros/${id}`, objeto);
+
+    navigate('/adm/home');
+  }
+
+  const voltar = (e) => {
+    e.preventDefault();
+    navigate('/adm/home');
   }
 
   return (
@@ -49,13 +59,22 @@ const EditarCarro = () => {
             onChange={e => atualizarCampo('preco', e.target.value)}
           />
         </div>
-        <button
-          type="button"
-          className="btn btn-success"
-          onClick={e => salvar(e)}
-        >
-          Salvar
-        </button>
+        <div className="card-footer d-flex justify-content-start gap-2">
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={e => salvar(e)}
+          >
+            Salvar
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={e => voltar(e)}
+          >
+            Voltar
+          </button>
+        </div>
       </div>
     </form>
   );

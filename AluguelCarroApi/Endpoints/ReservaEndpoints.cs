@@ -1,6 +1,8 @@
 using System;
 using AluguelCarroApi.Infra;
 using AluguelCarroApi.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace AluguelCarroApi.Endpoints;
 
@@ -17,17 +19,21 @@ public static class ReservaEndpoints
 
     private static IResult Get(AluguelContext db)
     {
-        return TypedResults.Ok(db.Reservas.ToList());
+
+        return TypedResults.Ok(db.Reservas
+            .Include(r => r.Carro)
+            .ToList());
     }
 
     private static IResult GetById(long id, AluguelContext db)
     {
-        var obj = db.Reservas.Find(id);
+        var obj = db.Reservas
+            .Include(r => r.Carro)
+            .FirstOrDefault(r => r.Id == id);
 
         if(obj == null)
             return TypedResults.NotFound();
 
-        
         return TypedResults.Ok(obj);
     }
 
@@ -38,7 +44,6 @@ public static class ReservaEndpoints
         if (carroExistente == null)
             return TypedResults.BadRequest();
 
-        obj.Id = 1;
         obj.Carro = carroExistente;
         db.Reservas.Add(obj);
         db.SaveChanges();
@@ -51,7 +56,9 @@ public static class ReservaEndpoints
         if(id != objNovo.Id)
             return TypedResults.BadRequest();
 
-        var obj = db.Reservas.Find(id);
+        var obj = db.Reservas
+            .Include(r => r.Carro)
+            .FirstOrDefault(r => r.Id == id);
 
         if(obj == null)
             return TypedResults.NotFound();
@@ -59,7 +66,6 @@ public static class ReservaEndpoints
         obj.QuantidadeDias = objNovo.QuantidadeDias;
         obj.DataInicio = objNovo.DataInicio;
         obj.ValorTotal = objNovo.ValorTotal;
-        obj.Carro = objNovo.Carro;
         
         db.Reservas.Update(obj);
         db.SaveChanges();

@@ -34,7 +34,6 @@ public static class CarroEndpoints
 
     private static IResult Post(Carro obj, AluguelContext db)
     {
-        obj.Id = 1;
         db.Carros.Add(obj);
         db.SaveChanges();
         

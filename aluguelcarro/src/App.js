@@ -28,7 +28,7 @@ function App() {
             <Route path="home" element={<HomeAdm/>}/>
             <Route path="reservas" element={<ReservaAdm/>}/>
             <Route path="inserir" element={<InserirCarro/>} />
-            <Route path="editar" element={<EditarCarro/>} />
+            <Route path="editar/:id" element={<EditarCarro/>} />
           </Route>
       </Routes>
     </BrowserRouter>
