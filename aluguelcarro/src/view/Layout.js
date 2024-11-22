@@ -1,7 +1,10 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const Layout = () => {
+    const location = useLocation();
+    const isAdmin = location.pathname.startsWith("/adm");
+
     return (
         <React.Fragment>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -18,7 +21,11 @@ const Layout = () => {
                             <li class="nav-item">
                                 <Link class="nav-link" to="reservas">Reservas</Link>
                             </li>
-
+                            {isAdmin && (
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="inserir">Inserir Carro</Link>
+                                </li>
+                            )}
                         </ul>
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
