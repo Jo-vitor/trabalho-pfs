@@ -15,7 +15,7 @@ const CarrosAlugados = () => {
 
   useEffect(() => {
     carregarDados();
-  });
+  }, []);
 
   if (!objetos) {
     return <div>Carregando...</div>
@@ -23,10 +23,17 @@ const CarrosAlugados = () => {
 
 
   const cancelarAluguel = (id) => {
-    axios.delete(`http://localhost:5146/reservas/${id}`)
-      .then(() => {
-        setObjetos(objetos.filter(car => car.id !== id));
-      })
+    const carroSelecionado = objetos.find(car => car.id === id);
+
+
+    axios.delete(`http://localhost:5146/reservas/${id}`).then(() => {
+      setObjetos(objetos.filter(reserva => reserva.id !== id));
+    })
+
+    axios.put(`http://localhost:5146/carros/${id}`, {
+      ...carroSelecionado,
+      reservado: false
+    })
   };
 
   return (
@@ -39,11 +46,11 @@ const CarrosAlugados = () => {
           objetos.map(reserva => (
             <div className="col" key={reserva.id}>
               <div className="card h-100">
-                <img src={reserva.image} className="card-img-top" alt={reserva.title} />
                 <div className="card-body">
                   <h5 className="card-title">{reserva.carro.modelo}</h5>
+                  <h5 className="card-title">{reserva.carro.ano}</h5>
                   <p className="card-text">Dias Alugados: {reserva.quantidadeDias}</p>
-                  <p className="card-text">Valor da locação (dia): R${reserva.valorTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
+                  <p className="card-text">Valor total da locação: R${reserva.valorTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
                   <button
                     type="button"
                     className="btn btn-danger"

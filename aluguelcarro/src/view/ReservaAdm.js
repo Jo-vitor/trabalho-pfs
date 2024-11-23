@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 
 const CarrosAlugados = () => {
   
-  const [carrosAlugados, setCarrosAlugados] = useState([
-    {
-      id: 1,
-      title: "HONDA HR-V",
-      description: "EXL 1.8 FLEXONE 16V 5P AUT. 2020",
-      price: "500,00",
-      image: "https://storagew.mercadorweb.com.br/imagens/veiculos/9/2024/7/honda-hr-v-exl-1-8-flexone-16v-5p-aut-2020-260423-1-sm.jpg",
-    },
-  ]);
+  const [objetos, setObjetos] = useState(null);
+
+
+  const carregarDados = () => {
+    axios.get('http://localhost:5146/reservas').then(resp => {
+      setObjetos(resp.data);
+    }).catch(erro => { console.log(erro) })
+  };
+
+  useEffect(() => {
+    carregarDados();
+  }, []);
+
+  if (!objetos) {
+    return <div>Carregando...</div>
+  }
 
   
   const cancelarAluguel = (id) => {
-    const novosCarros = carrosAlugados.filter(car => car.id !== id);
-    setCarrosAlugados(novosCarros);
+    const novosCarros = objetos.filter(car => car.id !== id);
+    setObjetos(novosCarros);
     alert("Aluguel cancelado com sucesso!");
   };
 
@@ -24,23 +32,22 @@ const CarrosAlugados = () => {
     <div className="container mt-5">
       <h2>Carros Alugados</h2>
       <div className="row row-cols-1 row-cols-md-3 g-4">
-        {carrosAlugados.length === 0 ? (
+        {objetos.length === 0 ? (
           <p>Nenhum carro alugado.</p>
         ) : (
-          carrosAlugados.map(car => (
-            <div className="col" key={car.id}>
+          objetos.map(reserva => (
+            <div className="col" key={reserva.id}>
               <div className="card h-100">
-                <img src={car.image} className="card-img-top" alt={car.title} />
                 <div className="card-body">
-                  <h5 className="card-title">{car.title}</h5>
-                  <p className="card-text">{car.description}</p>
-                  <p className="card-text">Valor da locação (dia): R${car.price}</p>
+                  <h5 className="card-title">{reserva.carro.modelo}</h5>
+                  <p className="card-text">{reserva.carro.ano}</p>
                   <p className="card-text"><b>Usuario que alugou o carro</b></p>
-                  <p className="card-text"><b>número de dias que foi alugado</b></p>                  
+                  <p className="card-text">Dias Alugados: {reserva.quantidadeDias}</p>
+                  <p className="card-text">Valor total da locação: R${reserva.valorTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
                   <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={() => cancelarAluguel(car.id)}
+                    onClick={() => cancelarAluguel(reserva.id)}
                   >
                     Cancelar Aluguel
                   </button>

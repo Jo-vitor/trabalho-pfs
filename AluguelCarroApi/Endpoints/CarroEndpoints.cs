@@ -9,11 +9,11 @@ public static class CarroEndpoints
 
     public static void AdicionarCarrosEndpoints(this WebApplication app)
     {
-        app.MapGet("/carros", Get);
-        app.MapGet("/carros/{id}", GetById);
-        app.MapPost("/carros", Post);
-        app.MapPut("/carros/{id}", Put);
-        app.MapDelete("/carros/{id}", Delete);
+        app.MapGet("/carros", Get).RequireAuthorization();
+        app.MapGet("/carros/{id}", GetById).RequireAuthorization();
+        app.MapPost("/carros", Post).RequireAuthorization("Admin");
+        app.MapPut("/carros/{id}", Put).RequireAuthorization("Admin");
+        app.MapDelete("/carros/{id}", Delete).RequireAuthorization("Admin");
     }
 
     private static IResult Get(AluguelContext db)
@@ -51,6 +51,7 @@ public static class CarroEndpoints
             return TypedResults.NotFound();
 
         obj.Modelo = objNovo.Modelo;
+        obj.Ano = objNovo.Ano;
         obj.Preco = objNovo.Preco;
         obj.Reservado = objNovo.Reservado;
         

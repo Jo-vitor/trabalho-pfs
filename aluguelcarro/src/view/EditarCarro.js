@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const EditarCarro = () => {
   const [objeto, setObjeto] = useState(
-    { id: "", modelo: "", preco: 0 }
+    { id: "", modelo: "", ano: 0, preco: 0 }
   )
 
   const navigate = useNavigate();
@@ -47,6 +47,15 @@ const EditarCarro = () => {
             className="form-control"
             value={objeto.modelo}
             onChange={e => atualizarCampo('modelo', e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="image" className="form-label">Ano</label>
+          <input
+            type="text"
+            className="form-control"
+            value={objeto.ano}
+            onChange={e => atualizarCampo('ano', e.target.value)}
           />
         </div>
         <div className="mb-3">

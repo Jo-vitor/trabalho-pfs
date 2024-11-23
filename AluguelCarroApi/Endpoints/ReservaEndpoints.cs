@@ -10,11 +10,11 @@ public static class ReservaEndpoints
 {
     public static void AdicionarReservasEndpoints(this WebApplication app)
     {
-        app.MapGet("/reservas", Get);
-        app.MapGet("/reservas/{id}", GetById);
-        app.MapPost("/reservas", Post);
-        app.MapPut("/reservas/{id}", Put);
-        app.MapDelete("/reservas/{id}", Delete);
+        app.MapGet("/reservas", Get).RequireAuthorization();
+        app.MapGet("/reservas/{id}", GetById).RequireAuthorization();
+        app.MapPost("/reservas", Post).RequireAuthorization();
+        app.MapPut("/reservas/{id}", Put).RequireAuthorization();
+        app.MapDelete("/reservas/{id}", Delete).RequireAuthorization();
     }
 
     private static IResult Get(AluguelContext db)
@@ -22,6 +22,7 @@ public static class ReservaEndpoints
 
         return TypedResults.Ok(db.Reservas
             .Include(r => r.Carro)
+            .Include(r => r.Usuario)
             .ToList());
     }
 
@@ -29,6 +30,7 @@ public static class ReservaEndpoints
     {
         var obj = db.Reservas
             .Include(r => r.Carro)
+            .Include(r => r.Usuario)
             .FirstOrDefault(r => r.Id == id);
 
         if(obj == null)
@@ -58,6 +60,7 @@ public static class ReservaEndpoints
 
         var obj = db.Reservas
             .Include(r => r.Carro)
+            .Include(r => r.Usuario)
             .FirstOrDefault(r => r.Id == id);
 
         if(obj == null)

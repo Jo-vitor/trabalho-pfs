@@ -1,16 +1,28 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Cadastro = () => {
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
 
     const navigate = useNavigate();
 
-    const cadastrar = () => {
-        alert("Cadastrado com sucesso");
-        navigate("/");
+    const [usuario, setUsuario] = useState(
+        { nome: "", login: "", senha: "" }
+    )
+
+    const cadastrar = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:5146/usuarios/cliente', usuario).then(resp => {
+            console.log(resp.data);
+            
+            navigate('/');
+        });
+    }
+
+    const atualizarCampo = (nome, valor) => {
+        let usuNovo = { ...usuario };
+        usuNovo[nome] = valor;
+        setUsuario(usuNovo);
     }
 
     return (
@@ -21,19 +33,20 @@ const Cadastro = () => {
                     <div className="mb-3 row">
                         <label htmlFor="staticNome" className="col-sm-2 col-form-label">Nome</label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" id="staticNome" value={nome} onChange={(t) => setNome(t.target.value)} />
+                            <input type="text" className="form-control" id="staticNome" value={usuario.nome} onChange={e => atualizarCampo('nome', e.target.value)}/>
                         </div>
                     </div>
                     <div className="mb-3 row">
-                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Login</label>
+                        <label htmlFor="staticlogin" className="col-sm-2 col-form-label">Login</label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" id="staticEmail" value={email} onChange={(t) => setEmail(t.target.value)} />
+                            <input type="text" className="form-control" id="staticlogin" value={usuario.login} onChange={e => atualizarCampo('login', e.target.value)}/>
                         </div>
                     </div>
                     <div className="mb-3 row">
                         <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Senha</label>
                         <div className="col-sm-10">
-                            <input type="password" className="form-control" id="inputPassword" value={senha} onChange={(t) => setSenha(t.target.value)} />
+                            <input type="password" className="form-control" id="inputPassword" value={usuario.senha} onChange={e => atualizarCampo('senha', e.target.value)}
+                            />
                         </div>
                     </div>
                     <div>

@@ -7,7 +7,6 @@ const Locacao = () => {
     <div className="container mt-5">
       <h2>Checkout de Aluguel de Carro</h2>
       <div className="card mb-3">
-        <img className="card-img-top" alt="aa" />
         <div className="card-body">
           <h5 className="card-title">ddd</h5>
           <p className="card-text">ddd</p>

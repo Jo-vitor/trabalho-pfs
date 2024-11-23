@@ -36,14 +36,9 @@ const HomeAdm = () => {
             {objetos.map(car => (
                 <div className="col" key={car.id}>
                     <div className="card h-100">
-                        <img
-                            src={car.image}
-                            className="card-img-top"
-                            alt={car.modelo}
-                        />
                         <div className="card-body">
                             <h5 className="card-title">{car.modelo}</h5>
-                            <p className="card-text">{car.ano}</p>
+                            <p className="card-text">Ano: {car.ano}</p>
                             <p className="card-text">Diária: {car.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
                         </div>
                         <div className="card-footer d-flex justify-content-end gap-2">

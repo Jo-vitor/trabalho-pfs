@@ -6,10 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
 
-  const [objetos, setObjetos] = useState(null);
-
   const navigate = useNavigate();
-
+  const [objetos, setObjetos] = useState(null);
 
   const carregarDados = () => {
     axios.get('http://localhost:5146/carros').then(resp => {
@@ -21,12 +19,18 @@ const Home = () => {
     carregarDados();
   }, []);
 
-
-
   if (!objetos) {
     return <div>Carregando...</div>
   }
 
+  if (objetos.length === 0) {
+    return (
+      <>
+        <h2>Carros para alugar</h2>
+        <p>Nenhum carro para alugar.</p>
+      </>
+    )
+  }
 
   const atualizarDias = (id, QuantidadeDias) => {
     setObjetos(objetos.map(car =>
@@ -52,6 +56,10 @@ const Home = () => {
     axios.post("http://localhost:5146/reservas", reserva).then(() => {
       navigate("/usuario/reservas")
     })
+    axios.put(`http://localhost:5146/carros/${id}`, {
+      ...carroSelecionado,
+      reservado: true
+    })
   };
 
   return (
@@ -59,14 +67,9 @@ const Home = () => {
       {objetos.map(car => (
         <div className="col" key={car.id}>
           <div className="card h-100">
-            <img
-              src={car.image}
-              className="card-img-top"
-              alt={car.modelo}
-              style={{ opacity: car.reservado ? 0.5 : 1 }}
-            />
             <div className="card-body">
               <h5 className="card-title">{car.modelo}</h5>
+              <h8 className="card-title">Ano: {car.ano}</h8>
               <p className="card-text">Diária: {car.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
               {car.reservado ? (
                 <button type="button" className="btn btn-secondary" disabled>

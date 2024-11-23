@@ -318,3 +318,12 @@ C:\Users\Gabriel\Documents\VIANNA\Camilo\trabalho-pfs\AluguelCarroApi\obj\Debug\
 C:\Users\Gabriel\Documents\VIANNA\Camilo\trabalho-pfs\AluguelCarroApi\obj\Debug\net8.0\AluguelCarroApi.pdb
 C:\Users\Gabriel\Documents\VIANNA\Camilo\trabalho-pfs\AluguelCarroApi\obj\Debug\net8.0\AluguelCarroApi.genruntimeconfig.cache
 C:\Users\Gabriel\Documents\VIANNA\Camilo\trabalho-pfs\AluguelCarroApi\obj\Debug\net8.0\ref\AluguelCarroApi.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\.env
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\João vitor\OneDrive\Área de Trabalho\ADS-4P\PFS\trabalho\trabalho-pfs\AluguelCarroApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
