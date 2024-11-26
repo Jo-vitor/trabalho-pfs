@@ -12,7 +12,7 @@ public static class LoginEndpoints
     public static void AdicionarLoginEndpoints(this WebApplication app)
     {
         app.MapPost("/login", PostLogin);
-        app.MapPost("/logout", Logout);
+        app.MapGet("/logout", Logout);
     }
 
     private static async Task<IResult> PostLogin(Usuario infoUser, AluguelContext db, IPasswordHasher<Usuario> hasher, HttpContext context)
@@ -35,7 +35,7 @@ public static class LoginEndpoints
             }
         );
 
-        return TypedResults.Ok("usuario: "+usuario.Login);
+        return TypedResults.Ok(usuario); 
     }
 
     private static IResult Logout(HttpContext contexto)

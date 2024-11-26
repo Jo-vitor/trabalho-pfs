@@ -10,11 +10,12 @@ public static class ReservaEndpoints
 {
     public static void AdicionarReservasEndpoints(this WebApplication app)
     {
-        app.MapGet("/reservas", Get).RequireAuthorization();
-        app.MapGet("/reservas/{id}", GetById).RequireAuthorization();
-        app.MapPost("/reservas", Post).RequireAuthorization();
-        app.MapPut("/reservas/{id}", Put).RequireAuthorization();
-        app.MapDelete("/reservas/{id}", Delete).RequireAuthorization();
+        app.MapGet("/reservas", Get).RequireAuthorization("Admin");
+        app.MapGet("/reservas/{id}", GetById).RequireAuthorization("AdminOuCliente");
+        app.MapGet("/reservas/usuario/{id}", GetByUsuario).RequireAuthorization("Cliente");
+        app.MapPost("/reservas", Post).RequireAuthorization("Cliente");
+        app.MapPut("/reservas/{id}", Put).RequireAuthorization("AdminOuCliente");
+        app.MapDelete("/reservas/{id}", Delete).RequireAuthorization("AdminOuCliente");
     }
 
     private static IResult Get(AluguelContext db)
@@ -39,14 +40,29 @@ public static class ReservaEndpoints
         return TypedResults.Ok(obj);
     }
 
+    private static IResult GetByUsuario(long id, AluguelContext db)
+    {
+        var obj = db.Reservas
+            .Include(r => r.Carro)
+            .Include(r => r.Usuario)
+            .Where(r => r.Usuario.Id == id);
+
+        if(obj == null)
+            return TypedResults.NotFound();
+
+        return TypedResults.Ok(obj);
+    }
+
     private static IResult Post(Reserva obj, AluguelContext db)
     {
         var carroExistente = db.Carros.Find(obj.Carro.Id);
+        var usuarioExistente = db.Usuarios.Find(obj.Usuario.Id);
 
-        if (carroExistente == null)
+        if (carroExistente == null || usuarioExistente == null)
             return TypedResults.BadRequest();
 
         obj.Carro = carroExistente;
+        obj.Usuario = usuarioExistente;
         db.Reservas.Add(obj);
         db.SaveChanges();
         

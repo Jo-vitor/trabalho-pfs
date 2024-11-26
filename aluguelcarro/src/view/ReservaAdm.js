@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const CarrosAlugados = () => {
   
+  const navigate = useNavigate();
   const [objetos, setObjetos] = useState(null);
 
 
   const carregarDados = () => {
-    axios.get('http://localhost:5146/reservas').then(resp => {
+    axios.get('http://localhost:5146/reservas', { withCredentials: true }).then(resp => {
       setObjetos(resp.data);
     }).catch(erro => { console.log(erro) })
   };
@@ -22,10 +24,20 @@ const CarrosAlugados = () => {
   }
 
   
-  const cancelarAluguel = (id) => {
-    const novosCarros = objetos.filter(car => car.id !== id);
-    setObjetos(novosCarros);
-    alert("Aluguel cancelado com sucesso!");
+  const cancelarAluguel = (idReserva) => {
+    const reservaSelecionada= objetos.find(reserva => reserva.id === idReserva);
+
+
+    axios.delete(`http://localhost:5146/reservas/${idReserva}`, { withCredentials: true })
+    .then(() => {
+      axios.put(`http://localhost:5146/carros/${reservaSelecionada.carro.id}`, {
+        ...reservaSelecionada.carro,
+        reservado: false
+      }, { withCredentials: true });
+    }).then(() => {
+      setObjetos(objetos.filter(reserva => reserva.id !== idReserva));
+      alert("Aluguel cancelado com sucesso!");
+    })
   };
 
   return (
@@ -41,7 +53,7 @@ const CarrosAlugados = () => {
                 <div className="card-body">
                   <h5 className="card-title">{reserva.carro.modelo}</h5>
                   <p className="card-text">{reserva.carro.ano}</p>
-                  <p className="card-text"><b>Usuario que alugou o carro</b></p>
+                  <p className="card-text"><b>{reserva.usuario.nome}</b></p>
                   <p className="card-text">Dias Alugados: {reserva.quantidadeDias}</p>
                   <p className="card-text">Valor total da locação: R${reserva.valorTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
                   <button

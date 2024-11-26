@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Cadastro = () => {
 
     const navigate = useNavigate();
+    const roleUsuario = localStorage.getItem('usuario-role');
 
     const [usuario, setUsuario] = useState(
         { nome: "", login: "", senha: "" }
@@ -12,11 +13,21 @@ const Cadastro = () => {
 
     const cadastrar = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5146/usuarios/cliente', usuario).then(resp => {
-            console.log(resp.data);
-            
-            navigate('/');
-        });
+
+        if(roleUsuario == "Admin"){
+            axios.post(`http://localhost:5146/usuarios/adm`, usuario).then(resp => {
+                console.log(resp.data);
+                
+                navigate('/adm/home');
+            }, { withCredentials: true });
+        }else {
+            axios.post(`http://localhost:5146/usuarios/cliente`, usuario).then(resp => {
+                console.log(resp.data);
+                
+                navigate('/');
+            });
+        }
+        
     }
 
     const atualizarCampo = (nome, valor) => {
@@ -26,7 +37,7 @@ const Cadastro = () => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40rem" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "30rem" }}>
             <div className="card" style={{ width: "40rem" }}>
                 <h1 style={{ textAlign: "center" }}>Cadastrar</h1>
                 <div className="card-body">
@@ -50,7 +61,7 @@ const Cadastro = () => {
                         </div>
                     </div>
                     <div>
-                        <button type="button" className="btn btn-secondary" style={{ marginTop: 10 }} onClick={cadastrar}>Cadastrar</button>
+                        <button type="button" className="btn btn-primary" style={{ marginTop: 10 }} onClick={cadastrar}>Cadastrar</button>
                     </div>
                 </div>
             </div>

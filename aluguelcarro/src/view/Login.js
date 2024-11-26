@@ -12,7 +12,6 @@ const Login = () => {
 
     const navigate = useNavigate();
     const [falha, setFalha] = useState(null);
-    const { redirecionarPara } = useParams();
 
     // const atualizarCampo = (nome, valor) => {
     //     let objNovo = { ...objeto };
@@ -21,23 +20,23 @@ const Login = () => {
     // }
 
     const sucessoLogin = (usuario) => {
-        sessionStorage.setItem("usuario-login", usuario.login);
-        console.log(usuario);
-        navigate("/usuario/home");
+        localStorage.setItem("usuario-nome", usuario.nome);
+        localStorage.setItem("usuario-id", usuario.id);
+        localStorage.setItem("usuario-role", usuario.role);
 
-        
+        if(usuario.role == "Cliente")
+            navigate("/usuario/home");
+        else
+            navigate("/adm/home");
     };
     
 
     const logar = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5146/login', objeto).then(res => {
-            //console.log(res);
+        axios.post('http://localhost:5146/login', objeto, { withCredentials: true }).then(res => {
+            console.log(res);
             sucessoLogin(res.data)
         });
-
-        //console.log(objeto);
-
     }
 
     let mensagemFalha = null;
@@ -50,10 +49,10 @@ const Login = () => {
     }
 
     return (
-        <div>
+        <div >
             {mensagemFalha}
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40rem" }}>
-                <div className="card" style={{ width: "40rem" }}>
+                <div className="card" style={{ width: "40rem" }} >
                     <h1 style={{ textAlign: "center" }}>Logar</h1>
                     <div className="card-body">
                         <div className="mb-3 row">

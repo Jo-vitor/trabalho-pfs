@@ -11,7 +11,7 @@ public static class UsuarioEndpoints
     {
         var group = app.MapGroup("/usuarios");
 
-        group.MapGet("", Get);
+        group.MapGet("", Get).RequireAuthorization("Admin");
         group.MapGet("/{id}", GetById).RequireAuthorization("AdminOuCliente");
         group.MapPost("/cliente", Post);
         group.MapPost("/adm", PostAdm).RequireAuthorization("Admin");

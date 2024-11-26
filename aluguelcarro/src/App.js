@@ -7,7 +7,6 @@ import Cadastro from "./view/Cadastro.js";
 import Layout from "./view/Layout.js";
 import Reserva from "./view/Reserva.js";
 import ReservaAdm from "./view/ReservaAdm.js";
-import Locacao from "./view/Locacao.js";
 import InserirCarro from "./view/InserirCarro.js";
 import EditarCarro from "./view/EditarCarro.js";
 
@@ -21,7 +20,6 @@ function App() {
           <Route path="/usuario" element={<Layout/>}>
             <Route path="home" element={<Home/>}/>
             <Route path="reservas" element={<Reserva/>}/>
-            <Route path="locacao" element={<Locacao/>}/>
           </Route>
 
           <Route path="/adm" element={<Layout/>}>
@@ -29,6 +27,7 @@ function App() {
             <Route path="reservas" element={<ReservaAdm/>}/>
             <Route path="inserir" element={<InserirCarro/>} />
             <Route path="editar/:id" element={<EditarCarro/>} />
+            <Route path="cadastro" element={<Cadastro/>}/>
           </Route>
       </Routes>
     </BrowserRouter>

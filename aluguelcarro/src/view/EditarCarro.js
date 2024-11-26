@@ -12,7 +12,7 @@ const EditarCarro = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:5146/carros/${id}`).then(resp => {
+    axios.get(`http://localhost:5146/carros/${id}`, { withCredentials: true }).then(resp => {
       console.log(resp.data);
       setObjeto(resp.data);
     })
@@ -26,7 +26,7 @@ const EditarCarro = () => {
 
   const salvar = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:5146/carros/${id}`, objeto);
+    axios.put(`http://localhost:5146/carros/${id}`, objeto, { withCredentials: true });
 
     navigate('/adm/home');
   }

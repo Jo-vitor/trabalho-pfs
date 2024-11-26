@@ -13,7 +13,13 @@ const InserirCarro = () => {
 
     const salvar = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5146/carros', objeto).then(resp => {
+
+        if (objeto.ano > 2025 || objeto.ano < 1990) {
+            alert("Ano invalido");
+            return;
+        } 
+        
+        axios.post('http://localhost:5146/carros', objeto, { withCredentials: true }).then(resp => {
             navigate('/adm/home');
         });
     }

@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const CarrosAlugados = () => {
 
+  const navigate = useNavigate();
   const [objetos, setObjetos] = useState(null);
 
 
   const carregarDados = () => {
-    axios.get('http://localhost:5146/reservas').then(resp => {
+    axios.get(`http://localhost:5146/reservas/usuario/${localStorage.getItem('usuario-id')}`, { withCredentials: true }).then(resp => {
       setObjetos(resp.data);
     }).catch(erro => { console.log(erro) })
   };
@@ -22,17 +24,18 @@ const CarrosAlugados = () => {
   }
 
 
-  const cancelarAluguel = (id) => {
-    const carroSelecionado = objetos.find(car => car.id === id);
+  const cancelarAluguel = (idReserva) => {
+    const reservaSelecionada= objetos.find(reserva => reserva.id === idReserva);
 
 
-    axios.delete(`http://localhost:5146/reservas/${id}`).then(() => {
-      setObjetos(objetos.filter(reserva => reserva.id !== id));
-    })
-
-    axios.put(`http://localhost:5146/carros/${id}`, {
-      ...carroSelecionado,
-      reservado: false
+    axios.delete(`http://localhost:5146/reservas/${idReserva}`, { withCredentials: true })
+    .then(() => {
+      axios.put(`http://localhost:5146/carros/${reservaSelecionada.carro.id}`, {
+        ...reservaSelecionada.carro,
+        reservado: false
+      }, { withCredentials: true });
+      alert("Aluguel cancelado com sucesso!");
+      navigate("/usuario/home");
     })
   };
 
@@ -49,6 +52,8 @@ const CarrosAlugados = () => {
                 <div className="card-body">
                   <h5 className="card-title">{reserva.carro.modelo}</h5>
                   <h5 className="card-title">{reserva.carro.ano}</h5>
+                  <h5 className="card-title">{reserva.usuario.nome}</h5>
+
                   <p className="card-text">Dias Alugados: {reserva.quantidadeDias}</p>
                   <p className="card-text">Valor total da locação: R${reserva.valorTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
                   <button

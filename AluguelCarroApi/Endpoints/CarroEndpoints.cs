@@ -12,7 +12,7 @@ public static class CarroEndpoints
         app.MapGet("/carros", Get).RequireAuthorization();
         app.MapGet("/carros/{id}", GetById).RequireAuthorization();
         app.MapPost("/carros", Post).RequireAuthorization("Admin");
-        app.MapPut("/carros/{id}", Put).RequireAuthorization("Admin");
+        app.MapPut("/carros/{id}", Put).RequireAuthorization("AdminOuCliente");
         app.MapDelete("/carros/{id}", Delete).RequireAuthorization("Admin");
     }
 
