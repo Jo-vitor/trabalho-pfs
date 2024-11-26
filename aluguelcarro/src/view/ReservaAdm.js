@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const CarrosAlugados = () => {
   
-  const navigate = useNavigate();
   const [objetos, setObjetos] = useState(null);
 
 

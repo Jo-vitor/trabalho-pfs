@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-//import { Link } from "react-router-dom";
-
 const Home = () => {
 
   const navigate = useNavigate();
@@ -47,14 +45,6 @@ const Home = () => {
       alert("Selecione o número de dias para alugar.");
       return;
     }
-
-    // const reserva = {
-    //   carro: { id: carroSelecionado.id },
-    //   usuario: { id: idUsuario },
-    //   quantidadeDias: carroSelecionado.QuantidadeDias,
-    //   valorTotal: carroSelecionado.preco * carroSelecionado.QuantidadeDias,
-    //   dataInicio: new Date().toISOString(),
-    // };
     
     const reserva = {
       dataInicio: new Date().toISOString(),

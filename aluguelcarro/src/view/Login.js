@@ -11,13 +11,6 @@ const Login = () => {
     })
 
     const navigate = useNavigate();
-    const [falha, setFalha] = useState(null);
-
-    // const atualizarCampo = (nome, valor) => {
-    //     let objNovo = { ...objeto };
-    //     objNovo[nome] = valor;
-    //     setObjeto(objNovo);
-    // }
 
     const sucessoLogin = (usuario) => {
         localStorage.setItem("usuario-nome", usuario.nome);
@@ -34,23 +27,12 @@ const Login = () => {
     const logar = (e) => {
         e.preventDefault();
         axios.post('http://localhost:5146/login', objeto, { withCredentials: true }).then(res => {
-            console.log(res);
             sucessoLogin(res.data)
         });
     }
 
-    let mensagemFalha = null;
-
-    if (falha) {
-        mensagemFalha = (<div className="alert alert-danger">{falha}</div>);
-        setTimeout(() => {
-            setFalha(null);
-        }, 10000);
-    }
-
     return (
         <div >
-            {mensagemFalha}
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40rem" }}>
                 <div className="card" style={{ width: "40rem" }} >
                     <h1 style={{ textAlign: "center" }}>Logar</h1>
