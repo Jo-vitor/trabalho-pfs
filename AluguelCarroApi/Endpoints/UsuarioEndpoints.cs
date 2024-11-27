@@ -65,9 +65,7 @@ public static class UsuarioEndpoints
         if(obj == null)
             return TypedResults.NotFound();
 
-        // obj.Modelo = objNovo.Modelo;
-        // obj.Preco = objNovo.Preco;
-        // obj.Reservado = objNovo.Reservado;
+        
         
         db.Usuarios.Update(obj);
         db.SaveChanges();

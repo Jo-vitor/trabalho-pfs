@@ -32,8 +32,8 @@ const Login = () => {
     }
 
     return (
-        <div >
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40rem" }}>
+        <div style={{backgroundColor: 'gray'}}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "45.6rem" }}>
                 <div className="card" style={{ width: "40rem" }} >
                     <h1 style={{ textAlign: "center" }}>Logar</h1>
                     <div className="card-body">

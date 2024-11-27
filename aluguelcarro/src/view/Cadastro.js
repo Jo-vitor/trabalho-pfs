@@ -15,11 +15,11 @@ const Cadastro = () => {
         e.preventDefault();
 
         if(roleUsuario == "Admin"){
-            axios.post(`http://localhost:5146/usuarios/adm`, usuario).then(resp => {
-                console.log(resp.data);
+            console.log("entrou");
+            axios.post(`http://localhost:5146/usuarios/adm`, usuario, { withCredentials: true }).then(resp => {
                 
                 navigate('/adm/home');
-            }, { withCredentials: true });
+            });
         }else {
             axios.post(`http://localhost:5146/usuarios/cliente`, usuario).then(resp => {
                 console.log(resp.data);
@@ -37,7 +37,9 @@ const Cadastro = () => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "30rem" }}>
+        <div style={{backgroundColor: 'gray'}}>
+
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "45.6rem" }}>
             <div className="card" style={{ width: "40rem" }}>
                 <h1 style={{ textAlign: "center" }}>Cadastrar</h1>
                 <div className="card-body">
@@ -65,6 +67,7 @@ const Cadastro = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
